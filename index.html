@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frustrated Gamer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #2e2e2e;
+            color: #e0e0e0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            overflow: hidden;
+            position: relative;
+        }
+        .container {
+            background: rgba(62, 62, 62, 0.8);
+            padding: 20px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            max-width: 600px;
+            width: 100%;
+            z-index: 1;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+        .container:hover {
+            transform: scale(1.05);
+        }
+        .meme {
+            width: 100%;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+        }
+        .meme:hover {
+            opacity: 0.8;
+        }
+        .message {
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 1em;
+            color: #cccccc;
+        }
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            z-index: 1000;
+            animation: fadeIn 0.5s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .overlay-content {
+            max-width: 400px;
+        }
+        #countdown {
+            font-size: 1.5em;
+            margin-top: 10px;
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .button {
+            padding: 10px 20px;
+            background-color: #444;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+        }
+        .button:hover {
+            background-color: #555;
+        }
+    </style>
+    <script>
+        let countdown;
+        const quotes = [
+            "<strong>Grandpa always knew</strong>: A 40-hour work week means less time for those oh-so-important daily meltdowns.",
+            "<strong>As Grandpa wisely pointed out</strong>: Work at least 40 hours a week and suddenly you’re too busy to get all dramatic every day.",
+            "<strong>Grandpa's wisdom</strong>: Working 40 hours a week magically reduces the time available for your daily outrage sessions.",
+            "<strong>Grandpa said it best</strong>: If you’re clocking in 40 hours a week, you’ll find less time to blow things out of proportion.",
+            "<strong>Grandpa always joked</strong>: Put in 40 hours a week at work, and watch your schedule for fake drama shrink.",
+            "<strong>Grandpa’s nugget of wisdom</strong>: A 40-hour work week is the best cure for daily fits of needless anger.",
+            "<strong>Grandpa's insight</strong>: Spend 40 hours a week working, and you'll have a lot less time for those theatrical daily freak-outs."
+        ];
+
+        function showOverlay() {
+            document.querySelector('.overlay').style.display = 'flex';
+            let timeLeft = 10;
+            document.getElementById('countdown').textContent = timeLeft;
+            countdown = setInterval(() => {
+                timeLeft--;
+                document.getElementById('countdown').textContent = timeLeft;
+                if (timeLeft <= 0) {
+                    clearInterval(countdown);
+                    redirectToYouTube();
+                }
+            }, 1000);
+        }
+
+        function acceptRedirect() {
+            clearInterval(countdown);
+            redirectToYouTube();
+        }
+
+        function redirectToYouTube() {
+            const a = document.createElement('a');
+            a.href = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ?autoplay=1';
+            a.rel = 'noopener noreferrer';
+            a.target = '_self';
+            a.click();
+        }
+
+        function cancelRedirect() {
+            clearInterval(countdown);
+            document.querySelector('.overlay').style.display = 'none';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.addEventListener('contextmenu', event => event.preventDefault());
+            document.querySelector('.meme').addEventListener('click', showOverlay);
+
+            // Randomly select a quote and display it in the footer
+            const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+            document.getElementById('footer-quote').innerHTML = randomQuote;
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h2>Oh no! Are you playing on launch or patch day?</h2>
+        <img src="image.webp" alt="Frustrated Gamer Meme" class="meme">
+        <div class="message">
+            <strong>Wisdoms of the Day:</strong><br>
+            "Never play on launch day"<br>"Never play on patch day"
+        </div>
+        <div class="footer" id="footer-quote">
+            <!-- Random quote will be inserted here -->
+        </div>
+    </div>
+    <div class="overlay">
+        <div class="overlay-content">
+            <p>You are being redirected to YouTube. Click the button to proceed immediately or cancel the countdown.</p>
+            <div id="countdown"></div>
+            <div class="button-container">
+                <button class="button" onclick="acceptRedirect()">Proceed to YouTube</button>
+                <button class="button" onclick="cancelRedirect()">Cancel</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
